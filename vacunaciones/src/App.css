@@ -1,0 +1,109 @@
+/* App.css */
+
+/* General */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f7f6;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  color: #00796b;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+}
+
+h2 {
+  margin-top: 20px;
+  font-size: 2rem;
+}
+
+input, button, label {
+  font-size: 1rem;
+}
+
+button {
+  background-color: #00796b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #004d40;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  width: calc(100% - 22px);
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+div {
+  margin: 20px auto;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Botón finalizar */
+button {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Resaltar secciones */
+h3 {
+  border-bottom: 2px solid #00796b;
+  padding-bottom: 5px;
+}
+
+/* Vacunas */
+label {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+}
