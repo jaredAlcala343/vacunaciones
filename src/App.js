@@ -1,19 +1,33 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import "./App.css";
-
-
 const vacunasMexico = [
-  { nombre: "BCG", refuerzo: false },
-  { nombre: "Hepatitis B", refuerzo: true },
-  { nombre: "Pentavalente", refuerzo: true },
-  { nombre: "Rotavirus", refuerzo: false },
-  { nombre: "Neumococo", refuerzo: true },
-  { nombre: "Influenza", refuerzo: true },
-  { nombre: "Triple Viral (SRP)", refuerzo: false },
-  { nombre: "DPT", refuerzo: true },
-  { nombre: "Varicela", refuerzo: false },
-  { nombre: "VPH", refuerzo: true },
+  "BCG",
+  "Hepatitis B",
+  "Hexavalente",
+  "DPT",
+  "Rotavirus",
+  "Neumocócica conjugada",
+  "SRP (triple viral)",
+  "Influenza",
+  "COVID-19",
+];
+
+const opcionesDosis = [
+  "Al nacer",
+  "2 meses",
+  "4 meses",
+  "6 meses",
+  "12 meses",
+  "18 meses",
+  "1 año",
+  "2 años",
+  "3 años",
+  "4 años",
+  "6 años",
+  "Primera dosis",
+  "Segunda dosis",
+  "Dosis anual",
 ];
 
 const App = () => {
@@ -31,19 +45,52 @@ const App = () => {
     setNuevaPersona({ ...nuevaPersona, [name]: value });
   };
 
-  // Manejar selección de vacunas
-  const handleVacunaChange = (nombre) => {
-    setNuevaPersona((prev) => ({
-      ...prev,
-      vacunas: {
-        ...prev.vacunas,
-        [nombre]: !prev.vacunas[nombre],
-      },
-    }));
+  // Manejar cambios en las dosis de una vacuna
+  const handleVacunaChange = (vacuna, index, value) => {
+    setNuevaPersona((prev) => {
+      const vacunas = { ...prev.vacunas };
+      vacunas[vacuna] = vacunas[vacuna] || [];
+      vacunas[vacuna][index] = value;
+      return { ...prev, vacunas };
+    });
   };
 
-  // Agregar persona al registro
+  // Agregar una nueva dosis a una vacuna
+  const agregarDosis = (vacuna) => {
+    setNuevaPersona((prev) => {
+      const vacunas = { ...prev.vacunas };
+  
+      // Si no existe la vacuna, inicializa como un arreglo vacío
+      if (!vacunas[vacuna]) {
+        vacunas[vacuna] = [];
+      }
+  
+      // Agrega solo una nueva dosis vacía
+      vacunas[vacuna] = [...vacunas[vacuna], ""];
+  
+      return { ...prev, vacunas };
+    });
+  };
+  
+
   const agregarPersona = () => {
+    const { iniciales, edad, ultimaVacunacion } = nuevaPersona;
+  
+    // Validaciones
+    if (!iniciales || iniciales.length > 4) {
+      alert("Por favor, ingresa las iniciales (máximo 4 caracteres).");
+      return;
+    }
+    if (!edad || isNaN(edad) || edad <= 0) {
+      alert("Por favor, ingresa una edad válida.");
+      return;
+    }
+    if (!ultimaVacunacion) {
+      alert("Por favor, selecciona la última fecha de vacunación.");
+      return;
+    }
+  
+    // Agregar la persona si todas las validaciones pasan
     setPersonas([...personas, nuevaPersona]);
     setNuevaPersona({
       iniciales: "",
@@ -52,6 +99,7 @@ const App = () => {
       vacunas: {},
     });
   };
+  
 
   // Generar archivo Excel
   const generarExcel = () => {
@@ -61,7 +109,9 @@ const App = () => {
       Edad: persona.edad,
       "Última Vacunación": persona.ultimaVacunacion,
       ...vacunasMexico.reduce((acc, vacuna) => {
-        acc[vacuna.nombre] = persona.vacunas[vacuna.nombre] ? "Sí" : "No";
+        acc[vacuna] = persona.vacunas[vacuna]
+          ? persona.vacunas[vacuna].join(", ")
+          : "No registrada";
         return acc;
       }, {}),
     }));
@@ -104,14 +154,29 @@ const App = () => {
 
         <h3>Vacunas</h3>
         {vacunasMexico.map((vacuna) => (
-          <label key={vacuna.nombre} style={{ display: "block" }}>
-            <input
-              type="checkbox"
-              checked={!!nuevaPersona.vacunas[vacuna.nombre]}
-              onChange={() => handleVacunaChange(vacuna.nombre)}
-            />
-            {vacuna.nombre} {vacuna.refuerzo && "(Con refuerzo)"}
-          </label>
+          <div key={vacuna} style={{ marginBottom: "15px" }}>
+            <h4>{vacuna}</h4>
+            {nuevaPersona.vacunas[vacuna]?.map((dosis, index) => (
+              <div key={index} style={{ display: "flex", alignItems: "center" }}>
+                <select
+                  value={dosis || ""}
+                  onChange={(e) =>
+                    handleVacunaChange(vacuna, index, e.target.value)
+                  }
+                >
+                  <option value="" disabled>
+                    Selecciona una opción
+                  </option>
+                  {opcionesDosis.map((opcion) => (
+                    <option key={opcion} value={opcion}>
+                      {opcion}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+            <button onClick={() => agregarDosis(vacuna)}>+ Añadir dosis</button>
+          </div>
         ))}
 
         <button onClick={agregarPersona}>Agregar Persona</button>

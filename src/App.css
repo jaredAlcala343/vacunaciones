@@ -7,24 +7,30 @@ body {
   color: #333;
   margin: 0;
   padding: 0;
+  line-height: 1.6;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   color: #00796b;
   text-align: center;
 }
 
 h1 {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   font-size: 2.5rem;
 }
 
-h2 {
+h2, h3 {
   margin-top: 20px;
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
-input, button, label {
+h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+input, select, button, label {
   font-size: 1rem;
 }
 
@@ -36,13 +42,14 @@ button {
   padding: 10px 15px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 10px;
 }
 
 button:hover {
   background-color: #004d40;
 }
 
-input {
+input, select {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -50,8 +57,17 @@ input {
   width: calc(100% - 22px);
 }
 
-input[type="checkbox"] {
-  margin-right: 10px;
+input[type="number"], input[type="date"], select {
+  margin-top: 5px;
+}
+
+div {
+  margin: 20px auto;
+  max-width: 700px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 label {
@@ -59,37 +75,54 @@ label {
   margin-bottom: 8px;
 }
 
+/* Vacunas */
+.vacuna-section {
+  margin-bottom: 20px;
+}
+
+.vacuna-section h4 {
+  color: #004d40;
+}
+
+.vacuna-section select {
+  width: 90%;
+  margin-right: 5px;
+}
+
+.vacuna-section button {
+  background-color: #00695c;
+}
+
+.vacuna-section button:hover {
+  background-color: #004d40;
+}
+
+/* Personas registradas */
 ul {
   list-style-type: none;
   padding: 0;
 }
 
 li {
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: #e0f2f1;
+  border: 1px solid #004d40;
   border-radius: 5px;
   margin: 10px 0;
   padding: 10px;
-}
-
-div {
-  margin: 20px auto;
-  max-width: 600px;
-  padding: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-}
-
-/* Botón finalizar */
-button {
-  display: block;
-  width: 100%;
+  color: #004d40;
   font-weight: bold;
 }
 
-button:active {
-  transform: scale(0.98);
+/* Botón finalizar */
+button.finalizar {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+button.finalizar:hover {
+  background-color: #004d40;
 }
 
 /* Resaltar secciones */
@@ -98,12 +131,7 @@ h3 {
   padding-bottom: 5px;
 }
 
-/* Vacunas */
-label {
-  display: flex;
-  align-items: center;
-}
-
-input[type="checkbox"] {
-  margin-right: 8px;
+/* Centrado */
+.center {
+  text-align: center;
 }
